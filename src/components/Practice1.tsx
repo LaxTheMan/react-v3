@@ -1,6 +1,6 @@
-import Button from './Button';
+import { Button } from './Button';
 
-export default function Practice1() {
+export const Practice1 = () => {
   return (
     <>
       <Button color="red" text="button1" />
@@ -8,4 +8,4 @@ export default function Practice1() {
       <Button color="green" text="button3" />
     </>
   );
-}
+};
