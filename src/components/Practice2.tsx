@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Input } from './input';
 
 export const Practice2 = () => {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLElement>) => {
     setIsChecked(!isChecked);
