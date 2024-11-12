@@ -9,7 +9,7 @@ export const Input: React.FC<InputProps> = ({ type, checked, style = '', onChang
   return (
     <div className="flex justify-between">
       <input type={type} className={style} checked={checked} onChange={onChange} />
-      <label className="mx-2">{checked && 'hello world'}</label>
+      {checked && <label className="mx-2">'hello world'</label>}
     </div>
   );
 };
