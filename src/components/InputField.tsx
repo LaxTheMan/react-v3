@@ -14,6 +14,7 @@ export const InputField = () => {
         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
         onChange={(e) => {
           setTextField(e.target.value);
+          console.log(e.target.value)
         }}
         value={textField}
       />
