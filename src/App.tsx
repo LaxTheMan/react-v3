@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import {Practice5} from "./templates/Practice5"
 
