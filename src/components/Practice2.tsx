@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Input } from './input';
+import { Input } from './Input';
 
 export const Practice2 = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);

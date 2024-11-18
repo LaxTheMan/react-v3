@@ -1,5 +1,5 @@
 import './App.css';
-import { Practice2 } from './components/Practice2';
+import { Practice3 } from './components/Practice3';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
         </header>
         <div className="flex-grow bg-white">
           <div className="flex justify-evenly mt-12">
-            <Practice2 />
+            <Practice3 />
           </div>
         </div>
       </div>
