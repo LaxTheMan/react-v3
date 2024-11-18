@@ -6,6 +6,7 @@ export const Practice2 = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
   const handleChange = () => {
+
     setIsChecked(!isChecked);
   };
 
