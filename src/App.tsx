@@ -1,11 +1,19 @@
-import "./App.css";
+import './App.css';
+import {Practice5} from "./templates/Practice5"
 
 function App() {
-	return (
-		<header className="bg-[#94A3B8] text-center p-[20px] text-4xl text-[#F9FAFB]">
-			React-v3
-		</header>
-	);
+  return (
+    <div className="h-screen flex justify-center items-center bg-outerContainer">
+      <div className="flex flex-col flex-grow m-32">
+        <header className="bg-slate-400 text-center p-2.5 text-4xl text-offwhite">
+          <div>React-v3</div>
+        </header>
+        <div className="bg-white">
+          <Practice5 />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default App;
