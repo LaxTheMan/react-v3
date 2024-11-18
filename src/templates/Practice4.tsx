@@ -1,6 +1,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { InputField } from '../components/InputField';
 import { useState } from 'react';
+import { ERROR_MESSAGES } from '../messages';
 
 export type FormInput = {
   'Postal Code': string;
@@ -15,7 +16,7 @@ export const Practice4 = () => {
     setValue,
     watch,
     formState: { errors },
-  } = useForm<FormInput>({ mode: 'onChange' });
+  } = useForm<FormInput>({ mode: 'onBlur' });
   const [, setAddress] = useState<FormInput>({ 'Postal Code': '', Prefecture: '', 'City/Ward/Town': '' });
   const [noResultsMessage, setNoResultsMessage] = useState<string>('');
   const onSubmit: SubmitHandler<FormInput> = (data) => console.log(data);
@@ -35,7 +36,7 @@ export const Practice4 = () => {
         setValue('City/Ward/Town', address2, { shouldValidate: true });
         setNoResultsMessage('');
       } else {
-        setNoResultsMessage('該当する住所が存在しません');
+        setNoResultsMessage(ERROR_MESSAGES.invalidPostalCode);
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -57,8 +58,8 @@ export const Practice4 = () => {
             label="Postal Code"
             register={register}
             validationRules={{
-              required: '必須項目です',
-              pattern: { value: /^(\d{7})?$/, message: '7桁の数字を入力してください' },
+              required: ERROR_MESSAGES.required,
+              pattern: { value: /^(\d{7})?$/, message: ERROR_MESSAGES.not7digits },
             }}
             errors={errors}
           />
@@ -74,7 +75,7 @@ export const Practice4 = () => {
           label="Prefecture"
           register={register}
           validationRules={{
-            required: '必須項目です',
+            required: ERROR_MESSAGES.required,
           }}
           errors={errors}
         />
@@ -82,7 +83,7 @@ export const Practice4 = () => {
           label="City/Ward/Town"
           register={register}
           validationRules={{
-            required: '必須項目です',
+            required: ERROR_MESSAGES.required,
           }}
           errors={errors}
         />
