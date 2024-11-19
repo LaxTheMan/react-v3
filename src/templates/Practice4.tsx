@@ -3,10 +3,14 @@ import { InputField } from '../components/InputField';
 import { useState } from 'react';
 import { ERROR_MESSAGES } from '../messages';
 
-export type FormInput = {
-  'Postal Code': string;
-  Prefecture: string;
-  'City/Ward/Town': string;
+export type AddressForm = {
+  postalCode: string;
+  prefecture: string;
+  area: string;
+};
+
+export type AddressSearchResult = {
+  results?: Array<{ address1: string; address2: string }>;
 };
 
 export const Practice4 = () => {
@@ -16,24 +20,27 @@ export const Practice4 = () => {
     setValue,
     watch,
     formState: { errors },
-  } = useForm<FormInput>({ mode: 'onBlur' });
-  const [, setAddress] = useState<FormInput>({ 'Postal Code': '', Prefecture: '', 'City/Ward/Town': '' });
+  } = useForm<AddressForm>({
+    mode: 'onBlur',
+    defaultValues: {
+      postalCode: '',
+      prefecture: '',
+      area: '',
+    },
+  });
   const [noResultsMessage, setNoResultsMessage] = useState<string>('');
-  const onSubmit: SubmitHandler<FormInput> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<AddressForm> = (data) => console.log(data);
 
-  const postalCode = watch('Postal Code', '');
+  const postalCode = watch('postalCode', '');
 
   const fetchData = async (query: string) => {
     try {
       const response = await fetch(`https://zipcloud.ibsnet.co.jp/api/search?zipcode=${query}`);
-      const result = await response.json();
+      const result: AddressSearchResult = await response.json();
       if (result['results']) {
         const { address1, address2 } = result['results'][0];
-        const newAddress = { 'Postal Code': query, Prefecture: address1, 'City/Ward/Town': address2 };
-
-        setAddress(newAddress);
-        setValue('Prefecture', address1, { shouldValidate: true });
-        setValue('City/Ward/Town', address2, { shouldValidate: true });
+        setValue('prefecture', address1, { shouldValidate: true });
+        setValue('area', address2, { shouldValidate: true });
         setNoResultsMessage('');
       } else {
         setNoResultsMessage(ERROR_MESSAGES.invalidPostalCode);
@@ -56,6 +63,7 @@ export const Practice4 = () => {
         <div className="flex">
           <InputField
             label="Postal Code"
+            name="postalCode"
             register={register}
             validationRules={{
               required: ERROR_MESSAGES.required,
@@ -73,6 +81,7 @@ export const Practice4 = () => {
         </div>
         <InputField
           label="Prefecture"
+          name="prefecture"
           register={register}
           validationRules={{
             required: ERROR_MESSAGES.required,
@@ -81,6 +90,7 @@ export const Practice4 = () => {
         />
         <InputField
           label="City/Ward/Town"
+          name="area"
           register={register}
           validationRules={{
             required: ERROR_MESSAGES.required,
