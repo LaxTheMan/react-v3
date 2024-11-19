@@ -43,6 +43,8 @@ export const Practice4 = () => {
         setValue('area', address2, { shouldValidate: true });
         setNoResultsMessage('');
       } else {
+        setValue('prefecture', '');
+        setValue('area', '');
         setNoResultsMessage(ERROR_MESSAGES.invalidPostalCode);
       }
     } catch (error) {
@@ -53,6 +55,9 @@ export const Practice4 = () => {
   const handleClick = () => {
     if (postalCode.length === 7) {
       fetchData(postalCode);
+    } else {
+      setValue('prefecture', '');
+      setValue('area', '');
     }
   };
 
