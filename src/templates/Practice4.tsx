@@ -3,15 +3,12 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { InputField } from '../components/InputField';
 import { useState } from 'react';
 import { ERROR_MESSAGES } from '../messages';
+import { useFormData } from '../hooks/useFormData';
 
 export type AddressForm = {
   postalCode: string;
   prefecture: string;
   area: string;
-};
-
-export type AddressSearchResult = {
-  results?: Array<{ address1: string; address2: string }>;
 };
 
 export const Practice4 = () => {
@@ -30,35 +27,26 @@ export const Practice4 = () => {
     },
   });
   const [noResultsMessage, setNoResultsMessage] = useState<string>('');
+  const { fetchData } = useFormData();
   const onSubmit: SubmitHandler<AddressForm> = (data) => console.log(data);
 
   const postalCode = watch('postalCode', '');
 
-  const fetchData = async (query: string) => {
-    try {
-      const response = await fetch(`https://zipcloud.ibsnet.co.jp/api/search?zipcode=${query}`);
-      const result: AddressSearchResult = await response.json();
-      if (result['results']) {
-        const { address1, address2 } = result['results'][0];
-        setValue('prefecture', address1, { shouldValidate: true });
-        setValue('area', address2, { shouldValidate: true });
-        setNoResultsMessage('');
-      } else {
-        setValue('prefecture', '');
-        setValue('area', '');
-        setNoResultsMessage(ERROR_MESSAGES.invalidPostalCode);
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
-  const handleClick = () => {
+  const handleClick = async () => {
     if (postalCode.length === 7) {
-      fetchData(postalCode);
-    } else {
-      setValue('prefecture', '');
-      setValue('area', '');
+      try {
+        const result = await fetchData(postalCode);
+        if (result.prefecture && result.area) {
+          setValue('prefecture', result.prefecture);
+          setValue('area', result.area);
+          setNoResultsMessage('');
+        } else {
+          setNoResultsMessage(ERROR_MESSAGES.invalidPostalCode);
+        }
+      } catch (error) {
+        console.error('Error fetching address:', error);
+        setNoResultsMessage('Error fetching address data. Please try again.');
+      }
     }
   };
 

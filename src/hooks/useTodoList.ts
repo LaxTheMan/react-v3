@@ -11,8 +11,6 @@ export const useTodoList = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [isAllChecked, setIsAllChecked] = useState<boolean>(false);
 
-  console.log(todos.length);
-
   const getFormattedDate = (): string => {
     const date = new Date();
     const year = date.getFullYear();
