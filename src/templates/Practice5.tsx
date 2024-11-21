@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { TODOList } from '../components/TODOList';
+import { TodoList } from '../components/TodoList';
 
 export type Todo = {
   id: number;
@@ -54,7 +54,7 @@ export const Practice5 = () => {
           追加
         </button>
       </div>
-      <TODOList todos={todos} setTodos={setTodos} />
+      <TodoList todos={todos} setTodos={setTodos} />
     </div>
   );
 };

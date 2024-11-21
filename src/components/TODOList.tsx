@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Todo } from '../templates/Practice5';
 
-type TODOListProps = {
+type TodoListProps = {
   todos: Todo[];
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 };
 
-export const TODOList = ({ todos, setTodos }: TODOListProps) => {
+export const TodoList = ({ todos, setTodos }: TodoListProps) => {
   const [isAllChecked, setIsAllChecked] = useState<boolean>(false);
 
   const handleDeleteTodo = (id: number) => {
@@ -18,11 +18,11 @@ export const TODOList = ({ todos, setTodos }: TODOListProps) => {
     setTodos(todos.filter((todo) => todo.checked === false));
   };
 
-  const handleCheckBoxClick = (id: number) => {
+  const toggleTodoCheckedStatus = (id: number) => {
     setTodos(todos.map((todo) => (todo.id === id ? { ...todo, checked: !todo.checked } : todo)));
   };
 
-  const handleSelectAllCheckBoxes = () => {
+  const toggleAllTodoCheckedStatus = () => {
     setIsAllChecked(!isAllChecked);
     setTodos(todos.map((todo) => ({ ...todo, checked: !isAllChecked })));
   };
@@ -34,7 +34,7 @@ export const TODOList = ({ todos, setTodos }: TODOListProps) => {
           <thead>
             <tr>
               <th className="w-16 relative bg-slate-500 border border-gray-900 px-1 py-2">
-                <input type="checkbox" checked={isAllChecked} onChange={handleSelectAllCheckBoxes} />
+                <input type="checkbox" checked={isAllChecked} onChange={toggleAllTodoCheckedStatus} />
                 {todos.some((todo) => todo.checked === true) && (
                   <button
                     onClick={handleDeleteSelected}
@@ -53,7 +53,7 @@ export const TODOList = ({ todos, setTodos }: TODOListProps) => {
             {todos.map((todo) => (
               <tr key={todo.id}>
                 <td className="border border-gray-900 px-4 py-2">
-                  <input type="checkbox" checked={todo.checked} onChange={() => handleCheckBoxClick(todo.id)} />
+                  <input type="checkbox" checked={todo.checked} onChange={() => toggleTodoCheckedStatus(todo.id)} />
                 </td>
                 <td className="border border-gray-900 px-4 py-2">{todo.date}</td>
                 <td className="border border-gray-900 px-4 py-2">{todo.text}</td>
