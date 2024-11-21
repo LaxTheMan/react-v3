@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { TODOList } from '../components/TODOList';
+import { useTodoList } from '../hooks/useTodoList';
 
 export type Todo = {
   id: number;
@@ -10,29 +11,12 @@ export type Todo = {
 };
 
 export const Practice5 = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const { todos, addTodo, isAllChecked, toggleTodoChecked, toggleSelectAll, deleteSelectedTodos, deleteTodo } =
+    useTodoList();
   const [input, setInput] = useState<string>('');
 
-  const getFormattedDate = (): string => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}/${month}/${day}`;
-  };
-
   const handleAddTodo = () => {
-    if (input.trim() === '') {
-      setInput('');
-      return;
-    }
-    const newTodo: Todo = {
-      id: Date.now(),
-      text: input,
-      checked: false,
-      date: getFormattedDate(),
-    };
-    setTodos([...todos, newTodo]);
+    addTodo(input);
     setInput('');
   };
 
@@ -54,7 +38,14 @@ export const Practice5 = () => {
           追加
         </button>
       </div>
-      <TODOList todos={todos} setTodos={setTodos} />
+      <TODOList
+        todos={todos}
+        isAllChecked={isAllChecked}
+        toggleTodoChecked={toggleTodoChecked}
+        toggleSelectAll={toggleSelectAll}
+        deleteSelectedTodos={deleteSelectedTodos}
+        deleteTodo={deleteTodo}
+      />
     </div>
   );
 };

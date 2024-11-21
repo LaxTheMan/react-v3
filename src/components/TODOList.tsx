@@ -1,32 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Todo } from '../templates/Practice5';
 
 type TODOListProps = {
   todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  isAllChecked: boolean;
+  toggleTodoChecked: (id: number) => void;
+  toggleSelectAll: () => void;
+  deleteSelectedTodos: () => void;
+  deleteTodo: (id: number) => void;
 };
 
-export const TODOList = ({ todos, setTodos }: TODOListProps) => {
-  const [allChecked, setAllChecked] = useState<boolean>(false);
-
-  const handleDeleteTodo = (id: number) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
-
-  const handleDeleteSelected = () => {
-    setAllChecked(false);
-    setTodos(todos.filter((todo) => todo.checked === false));
-  };
-
-  const handleCheckBoxClick = (id: number) => {
-    setTodos(todos.map((todo) => (todo.id === id ? { ...todo, checked: !todo.checked } : todo)));
-  };
-
-  const handleSelectAllCheckBoxes = () => {
-    setAllChecked(!allChecked);
-    setTodos(todos.map((todo) => ({ ...todo, checked: !allChecked })));
-  };
-
+export const TODOList = ({
+  todos,
+  isAllChecked,
+  toggleTodoChecked,
+  toggleSelectAll,
+  deleteSelectedTodos,
+  deleteTodo,
+}: TODOListProps) => {
   return (
     <>
       {todos.length !== 0 && (
@@ -34,10 +25,10 @@ export const TODOList = ({ todos, setTodos }: TODOListProps) => {
           <thead>
             <tr>
               <th className="w-16 relative bg-slate-500 border border-gray-900 px-1 py-2">
-                <input type="checkbox" checked={allChecked} onChange={handleSelectAllCheckBoxes} />
+                <input type="checkbox" checked={isAllChecked} onChange={toggleSelectAll} />
                 {todos.some((todo) => todo.checked === true) && (
                   <button
-                    onClick={handleDeleteSelected}
+                    onClick={deleteSelectedTodos}
                     className="w-16 absolute -top-12 left-1/2 transform -translate-x-1/2 px-1 py-1 text-xs bg-red text-white rounded-md cursor-pointer"
                   >
                     一括削除
@@ -53,12 +44,12 @@ export const TODOList = ({ todos, setTodos }: TODOListProps) => {
             {todos.map((todo) => (
               <tr key={todo.id}>
                 <td className="border border-gray-900 px-4 py-2">
-                  <input type="checkbox" checked={todo.checked} onChange={() => handleCheckBoxClick(todo.id)} />
+                  <input type="checkbox" checked={todo.checked} onChange={() => toggleTodoChecked(todo.id)} />
                 </td>
                 <td className="border border-gray-900 px-4 py-2">{todo.date}</td>
                 <td className="border border-gray-900 px-4 py-2">{todo.text}</td>
                 <td className="border border-gray-900 px-4 py-2">
-                  <button type="button" onClick={() => handleDeleteTodo(todo.id)}>
+                  <button type="button" onClick={() => deleteTodo(todo.id)}>
                     削除
                   </button>
                 </td>
