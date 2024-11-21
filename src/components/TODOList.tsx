@@ -7,14 +7,14 @@ type TODOListProps = {
 };
 
 export const TODOList = ({ todos, setTodos }: TODOListProps) => {
-  const [allChecked, setAllChecked] = useState<boolean>(false);
+  const [isAllChecked, setIsAllChecked] = useState<boolean>(false);
 
   const handleDeleteTodo = (id: number) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
   const handleDeleteSelected = () => {
-    setAllChecked(false);
+    setIsAllChecked(false);
     setTodos(todos.filter((todo) => todo.checked === false));
   };
 
@@ -23,8 +23,8 @@ export const TODOList = ({ todos, setTodos }: TODOListProps) => {
   };
 
   const handleSelectAllCheckBoxes = () => {
-    setAllChecked(!allChecked);
-    setTodos(todos.map((todo) => ({ ...todo, checked: !allChecked })));
+    setIsAllChecked(!isAllChecked);
+    setTodos(todos.map((todo) => ({ ...todo, checked: !isAllChecked })));
   };
 
   return (
@@ -34,7 +34,7 @@ export const TODOList = ({ todos, setTodos }: TODOListProps) => {
           <thead>
             <tr>
               <th className="w-16 relative bg-slate-500 border border-gray-900 px-1 py-2">
-                <input type="checkbox" checked={allChecked} onChange={handleSelectAllCheckBoxes} />
+                <input type="checkbox" checked={isAllChecked} onChange={handleSelectAllCheckBoxes} />
                 {todos.some((todo) => todo.checked === true) && (
                   <button
                     onClick={handleDeleteSelected}
