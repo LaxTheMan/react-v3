@@ -1,16 +1,17 @@
 import React from 'react';
 import { FieldErrors, Path, RegisterOptions, UseFormRegister } from 'react-hook-form';
-import { FormInput } from '../templates/Practice4';
+import { AddressForm } from '../templates/Practice4';
 
 type InputFieldProps = {
-  label: Path<FormInput>;
-  register: UseFormRegister<FormInput>;
-  validationRules?: RegisterOptions<FormInput>;
-  errors?: FieldErrors<FormInput>;
+  label: string;
+  name: Path<AddressForm>;
+  register: UseFormRegister<AddressForm>;
+  validationRules?: RegisterOptions<AddressForm>;
+  errors?: FieldErrors<AddressForm>;
 };
 
-export const InputField = ({ label, register, validationRules, errors }: InputFieldProps) => {
-  const fieldError = errors?.[label];
+export const InputField = ({ label, name, register, validationRules, errors }: InputFieldProps) => {
+  const fieldError = errors?.[name];
 
   return (
     <div className="space-x-4 flex items-baseline">
