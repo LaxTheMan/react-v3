@@ -1,32 +1,30 @@
-import { useState } from 'react';
+import { FieldErrors, Path, RegisterOptions, UseFormRegister } from 'react-hook-form';
+import { AddressForm } from '../templates/Practice4';
 
-export const InputField = () => {
-  const [textField, setTextField] = useState<string>('');
+type InputFieldProps = {
+  label: string;
+  name: Path<AddressForm>,
+  register: UseFormRegister<AddressForm>;
+  validationRules?: RegisterOptions<AddressForm>;
+  errors?: FieldErrors<AddressForm>;
+};
 
-  const handleClick = () => {
-    setTextField('');
-  };
+export const InputField = ({ label, name, register, validationRules, errors }: InputFieldProps) => {
+  const fieldError = errors?.[name];
 
   return (
-    <div className="relative w-64">
-      <input
-        type="text"
-        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-        onChange={(e) => {
-          setTextField(e.target.value);
-          console.log(e.target.value);
-        }}
-        value={textField}
-      />
-      {textField && (
-        <button
-          type="button"
-          className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700"
-          onClick={handleClick}
-        >
-          ×
-        </button>
-      )}
+    <div className="space-x-4 flex items-baseline">
+      <label className="w-40">{label}</label>
+      <div className="flex flex-col items-baseline">
+        <input
+          {...register(name, validationRules)}
+          type="text"
+          className="w-auto px-4 py-1 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+        />
+        {fieldError && (
+          <p className=" text-red text-left">{(fieldError.type === 'required' || 'pattern') && fieldError.message}</p>
+        )}
+      </div>
     </div>
   );
 };
