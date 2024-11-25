@@ -1,3 +1,4 @@
+import React from "react";
 type Color = 'red' | 'yellow' | 'green';
 
 type ButtonProps = {

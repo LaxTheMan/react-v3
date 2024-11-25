@@ -1,3 +1,4 @@
+import React from "react";
 type InputProps = {
   type: string;
   checked: boolean;
@@ -9,7 +10,7 @@ export const Input: React.FC<InputProps> = ({ type, checked, className = '', onC
   return (
     <div className="flex justify-between">
       <input type={type} className={className} checked={checked} onChange={onChange} />
-      {checked && <label className="mx-2">'hello world'</label>}
+      {checked && <label className="mx-2">&apos;hello world&apos;</label>}
     </div>
   );
 };

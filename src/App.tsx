@@ -1,5 +1,6 @@
+import React from 'react';
 import './App.css';
-import { Practice4 } from './templates/Practice4';
+import {Practice5} from "./templates/Practice5"
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
           <div>React-v3</div>
         </header>
         <div className="bg-white">
-          <Practice4 />
+          <Practice5 />
         </div>
       </div>
     </div>
