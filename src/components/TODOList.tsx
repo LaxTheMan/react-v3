@@ -1,23 +1,23 @@
 import React from 'react';
 import { Todo } from '../templates/Practice5';
 
-type TODOListProps = {
+type TodoListProps = {
   todos: Todo[];
   isAllChecked: boolean;
-  toggleTodoChecked: (id: number) => void;
-  toggleSelectAll: () => void;
+  toggleTodoCheckedStatus: (id: number) => void;
+  toggleAllTodoCheckedStatus: () => void;
   deleteSelectedTodos: () => void;
   deleteTodo: (id: number) => void;
 };
 
-export const TODOList = ({
+export const TodoList = ({
   todos,
   isAllChecked,
-  toggleTodoChecked,
-  toggleSelectAll,
+  toggleTodoCheckedStatus,
+  toggleAllTodoCheckedStatus,
   deleteSelectedTodos,
   deleteTodo,
-}: TODOListProps) => {
+}: TodoListProps) => {
   return (
     <>
       {todos.length !== 0 && (
@@ -25,7 +25,7 @@ export const TODOList = ({
           <thead>
             <tr>
               <th className="w-16 relative bg-slate-500 border border-gray-900 px-1 py-2">
-                <input type="checkbox" checked={isAllChecked} onChange={toggleSelectAll} />
+                <input type="checkbox" checked={isAllChecked} onChange={toggleAllTodoCheckedStatus} />
                 {todos.some((todo) => todo.checked === true) && (
                   <button
                     onClick={deleteSelectedTodos}
@@ -44,7 +44,7 @@ export const TODOList = ({
             {todos.map((todo) => (
               <tr key={todo.id}>
                 <td className="border border-gray-900 px-4 py-2">
-                  <input type="checkbox" checked={todo.checked} onChange={() => toggleTodoChecked(todo.id)} />
+                  <input type="checkbox" checked={todo.checked} onChange={() => toggleTodoCheckedStatus(todo.id)} />
                 </td>
                 <td className="border border-gray-900 px-4 py-2">{todo.date}</td>
                 <td className="border border-gray-900 px-4 py-2">{todo.text}</td>

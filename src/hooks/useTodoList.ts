@@ -39,11 +39,11 @@ export const useTodoList = () => {
     setTodos((prev) => prev.filter((todo) => !todo.checked));
   };
 
-  const toggleTodoChecked = (id: number) => {
+  const toggleTodoCheckedStatus = (id: number) => {
     setTodos((prev) => prev.map((todo) => (todo.id === id ? { ...todo, checked: !todo.checked } : todo)));
   };
 
-  const toggleSelectAll = () => {
+  const toggleAllTodoCheckedStatus = () => {
     setIsAllChecked((prev) => !prev);
     setTodos((prev) => prev.map((todo) => ({ ...todo, checked: !isAllChecked })));
   };
@@ -54,7 +54,7 @@ export const useTodoList = () => {
     addTodo,
     deleteTodo,
     deleteSelectedTodos,
-    toggleTodoChecked,
-    toggleSelectAll,
+    toggleTodoCheckedStatus,
+    toggleAllTodoCheckedStatus,
   };
 };

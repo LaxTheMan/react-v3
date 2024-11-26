@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import { TODOList } from '../components/TODOList';
 import { useTodoList } from '../hooks/useTodoList';
+import { TodoList } from '../components/TodoList';
 
 export type Todo = {
   id: number;
@@ -11,8 +11,15 @@ export type Todo = {
 };
 
 export const Practice5 = () => {
-  const { todos, addTodo, isAllChecked, toggleTodoChecked, toggleSelectAll, deleteSelectedTodos, deleteTodo } =
-    useTodoList();
+  const {
+    todos,
+    addTodo,
+    isAllChecked,
+    toggleTodoCheckedStatus,
+    toggleAllTodoCheckedStatus,
+    deleteSelectedTodos,
+    deleteTodo,
+  } = useTodoList();
   const [input, setInput] = useState<string>('');
 
   const handleAddTodo = () => {
@@ -38,11 +45,11 @@ export const Practice5 = () => {
           追加
         </button>
       </div>
-      <TODOList
+      <TodoList
         todos={todos}
         isAllChecked={isAllChecked}
-        toggleTodoChecked={toggleTodoChecked}
-        toggleSelectAll={toggleSelectAll}
+        toggleTodoCheckedStatus={toggleTodoCheckedStatus}
+        toggleAllTodoCheckedStatus={toggleAllTodoCheckedStatus}
         deleteSelectedTodos={deleteSelectedTodos}
         deleteTodo={deleteTodo}
       />
