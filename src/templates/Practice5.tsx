@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
 import { useTodoList } from '../hooks/useTodoList';
-import { TodoList } from '../components/TodoList';
 
 export type Todo = {
   id: number;
