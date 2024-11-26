@@ -1,54 +1,10 @@
 import React from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
 import { InputField } from '../components/InputField';
-import { useState } from 'react';
 import { ERROR_MESSAGES } from '../messages';
 import { useFormData } from '../hooks/useFormData';
 
-export type AddressForm = {
-  postalCode: string;
-  prefecture: string;
-  area: string;
-};
-
 export const Practice4 = () => {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<AddressForm>({
-    mode: 'onBlur',
-    defaultValues: {
-      postalCode: '',
-      prefecture: '',
-      area: '',
-    },
-  });
-  const [noResultsMessage, setNoResultsMessage] = useState<string>('');
-  const { fetchData } = useFormData();
-  const onSubmit: SubmitHandler<AddressForm> = (data) => console.log(data);
-
-  const postalCode = watch('postalCode', '');
-
-  const handleClick = async () => {
-    if (postalCode.length === 7) {
-      try {
-        const result = await fetchData(postalCode);
-        if (result.prefecture && result.area) {
-          setValue('prefecture', result.prefecture);
-          setValue('area', result.area);
-          setNoResultsMessage('');
-        } else {
-          setNoResultsMessage(ERROR_MESSAGES.invalidPostalCode);
-        }
-      } catch (error) {
-        console.error('Error fetching address:', error);
-        setNoResultsMessage('Error fetching address data. Please try again.');
-      }
-    }
-  };
+  const { register, handleSubmit, onSubmit, errors, noResultsMessage, validatePostalCode } = useFormData();
 
   return (
     <div className="flex flex-col items-center">
@@ -68,7 +24,7 @@ export const Practice4 = () => {
           <button
             className="self-start mx-2 px-1 py-1 bg-slate-500 text-white rounded-md hover:bg-slate-600"
             type="button"
-            onClick={handleClick}
+            onClick={validatePostalCode}
           >
             Search
           </button>

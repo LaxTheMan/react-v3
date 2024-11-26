@@ -1,6 +1,6 @@
 import React from 'react';
 import { FieldErrors, Path, RegisterOptions, UseFormRegister } from 'react-hook-form';
-import { AddressForm } from '../templates/Practice4';
+import { AddressForm } from '../hooks/useFormData';
 
 type InputFieldProps = {
   label: string;
